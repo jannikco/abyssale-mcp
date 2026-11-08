@@ -1,15 +1,21 @@
 {
   "name": "abyssale-mcp",
-  "version": "0.1.0",
-  "description": "Generate Abyssale MCP client configuration, inspect available tools and validate hosted endpoint access through PipMCP.",
+  "version": "0.2.0",
+  "description": "Discover design templates, request asset generation and poll until the generated files are ready.",
   "type": "module",
-  "private": false,
   "license": "MIT",
   "engines": {
     "node": ">=22"
   },
+  "bin": {
+    "abyssale-mcp": "server.mjs"
+  },
   "scripts": {
-    "test": "node --test",
-    "start": "node example.mjs"
+    "start": "node example.mjs",
+    "server": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0"
   }
 }

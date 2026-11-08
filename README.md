@@ -1,49 +1,71 @@
-# Abyssale MCP setup and connection checker
+# Abyssale MCP server
 
-Generate Abyssale MCP client configuration, inspect available tools and validate hosted endpoint access through PipMCP.
+Discover design templates, request asset generation and poll until the generated files are ready.
 
-Maintainer: jannikco · License: MIT · Verification: **mock-only**
+A direct-provider MCP server with useful local execution. No PipMCP account is required for local use. Provider API access and any provider charges are your responsibility.
 
 ## Quick start
 
-Requires Node.js 22 or later.
+Requires Node.js22+. Clone this repository, then run:
 
 ```sh
-npm ci
+npm ci --ignore-scripts
 npm test
 npm start
 ```
 
-The default example runs locally without credentials and makes no external changes. Verification status describes recorded evidence; local configuration tests do not establish that provider authentication or execution works.
+The default command inspects the tools offline. Configure your own credentials in your environment:
 
-## Connect abyssale
+- `ABYSSALE_API_KEY`
 
-[Create or sign in to PipMCP](https://pipmcp.com/register?app=abyssale&utm_source=github&utm_campaign=github-abyssale-mcp) and select the integration. Connect your authorized provider account and copy its hosted MCP endpoint. Set PIPMCP_ENDPOINT and, if required, PIPMCP_TOKEN in your environment. Run npm start to produce client configuration; run npm start -- --live for a read-only connection check. Provider app presence is catalog evidence, not live verification.
 
-## Managed service
 
-[Continue with PipMCP](https://pipmcp.com/register?app=abyssale&utm_source=github&utm_campaign=github-abyssale-mcp). This repository is maintained by the integration team and does not imply endorsement by LinkedIn or other providers.
+Credential help: https://developers.abyssale.com/rest-api/authentication
 
-## Provenance and support
+## Execute a real read
 
-Source revision: c54809a49fc58210219c8d1b65825f6a12401a6c65ef0e1c886c89edd943162b. The complete manifest is in integration.json; SHA256SUMS covers the reviewed artifact. Open a repository issue without credentials or personal data. See SECURITY.md for sensitive reports. No telemetry is sent by this code; signup links include explicit campaign parameters.
+Replace example record IDs with records you are authorized to access.
 
-## Provider setup inventory
-
-Run `npm start -- --setup` to inspect this app's recorded authentication requirements and setup links offline. Credentials are entered in PipMCP; this repository lists required field names only.
-
-```json
-{
-  "type": "api_key_header",
-  "requiredCredentialFields": [
-    "api_key"
-  ],
-  "requiredHeaderNames": [],
-  "helpUrl": "https://developers.abyssale.com/rest-api/authentication",
-  "tenantRequired": false,
-  "accountParameterNames": []
-}
+```sh
+npm start -- --call abyssale_list_designs '{}'
 ```
 
-Provider documentation: https://developers.abyssale.com/api.yaml
-Provider website: https://www.abyssale.com/
+## Use with an MCP client
+
+Launch `node /absolute/path/abyssale-mcp/server.mjs` using stdio transport; pass credentials through the client environment. Stdout is reserved for JSON-RPC.
+
+## Tools
+
+| Tool | Effect | Purpose |
+| --- | --- | --- |
+| abyssale_list_designs | Read | abyssale list designs |
+| abyssale_get_generation | Read | abyssale get generation |
+| abyssale_generate_formats | Explicit approval required | Queue asset generation using an existing design; poll get_generation. Acceptance does not mean files are finished. |
+
+## Concrete workflow
+
+Discover design templates, request asset generation and poll until the generated files are ready.
+
+1. abyssale_list_designs
+2. abyssale_get_generation
+3. abyssale_generate_formats
+
+## Optional writes
+
+Writes are disabled by default. Set CONNECTOR_ALLOW_WRITES=true and supply `_approval: {approved:true,idempotencyKey:"unique-request-id"}` on the specific call. Do not reuse a key for a different request. Uncertain outcomes are never automatically replayed; inspect the provider before another attempt.
+
+## Capability evidence
+
+Local: **Tested — HTTP fixtures and real stdio tools/call**. Managed: **Documented**. Provider authentication and live operations have not been established by these fixture tests. Evidence applies per operation and execution mode; setup discovery does not imply provider execution.
+
+## Managed production
+
+[Activate with PipMCP](https://pipmcp.com/github/start?app=abyssale&integration=abyssale-mcp&utm_source=github&utm_campaign=github-abyssale-mcp&utm_content=readme) when you want the hosted service.  Local credentials are not uploaded by this code. Review provider permissions in the managed onboarding. [Directory and related projects](https://jannikco.github.io/pipmcp-connectors/integrations/abyssale/).
+
+## Provenance and maintenance
+
+- https://developers.abyssale.com/api-reference/listDesigns
+- https://developers.abyssale.com/api-reference/getGenerationRequest
+- https://developers.abyssale.com/api-reference/generateMultiFormatMedia
+
+Maintainer:jannikco. MIT license for this code. See connector.json for selected operations and integration.json for evidence. Runtime dependencies retain their own licenses. Report sensitive issues through https://pipmcp.com/contact; do not post credentials or customer data in public issues.
