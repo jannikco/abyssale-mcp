@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "verification": "mock-only",
+  "releaseEligible": true,
+  "maintainer": "jannikco",
+  "license": "MIT",
+  "sourceRevision": "c54809a49fc58210219c8d1b65825f6a12401a6c65ef0e1c886c89edd943162b",
+  "evidence": [
+    "Source-backed provider setup metadata",
+    "Offline configuration and MCP protocol tests"
+  ],
+  "provenance": [
+    "https://developers.abyssale.com/api.yaml"
+  ],
+  "id": "abyssale-mcp",
+  "kind": "mcp-setup",
+  "product": "pipmcp",
+  "title": "Abyssale MCP setup and connection checker",
+  "description": "Generate Abyssale MCP client configuration, inspect available tools and validate hosted endpoint access through PipMCP.",
+  "operationIds": [],
+  "appSlug": "abyssale",
+  "appName": "Abyssale",
+  "providerDocs": "https://developers.abyssale.com/api.yaml",
+  "providerWebsite": "https://www.abyssale.com/",
+  "authentication": {
+    "type": "api_key_header",
+    "requiredCredentialFields": [
+      "api_key"
+    ],
+    "requiredHeaderNames": [],
+    "helpUrl": "https://developers.abyssale.com/rest-api/authentication",
+    "tenantRequired": false,
+    "accountParameterNames": []
+  },
+  "attributionSlug": "github-abyssale-mcp",
+  "factory": "leadadapter-pipmcp",
+  "generatorVersion": 1
+}
