@@ -1,364 +1,64 @@
 {
   "schemaVersion": 1,
+  "id": "abyssale-mcp",
+  "kind": "provider-connector",
+  "product": "pipmcp",
+  "title": "Abyssale MCP server",
+  "description": "Use Abyssale with AI agents through one PipMCP API key, actual hosted schemas and governed execution.",
   "status": "ready",
   "verification": "mock-only",
   "releaseEligible": true,
+  "operationIds": [],
   "maintainer": "jannikco",
   "license": "MIT",
-  "sourceRevision": "89b2f14ecb9a5310efa88b18c4f08a366f97cc7888c9f27031263ce9972aba85",
+  "attributionSlug": "github-abyssale-mcp",
+  "sourceRevision": "10289aa0b9f1a4e0d5532890a1b49c6ef4c050d63ee90edef8010d851382a0ac",
+  "qualityVersion": 2,
+  "artifactType": "connector",
   "evidence": [
-    "Actual tools/call and direct-provider request contract tests"
+    "Gateway HTTP transport fixtures",
+    "Generated stdio wrapper discovery/call fixtures"
   ],
   "provenance": [
     "https://developers.abyssale.com/api-reference/listDesigns",
     "https://developers.abyssale.com/api-reference/getGenerationRequest",
     "https://developers.abyssale.com/api-reference/generateMultiFormatMedia"
   ],
-  "id": "abyssale-mcp",
-  "kind": "provider-connector",
-  "product": "pipmcp",
-  "title": "Abyssale MCP server",
-  "description": "Discover design templates, request asset generation and poll until the generated files are ready.",
-  "operationIds": [
-    "abyssale_list_designs",
-    "abyssale_get_generation",
-    "abyssale_generate_formats"
-  ],
+  "utility": {
+    "problem": "Discover design templates, request asset generation and poll until the generated files are ready.",
+    "output": "Actual hosted tool schemas and durable governed execution receipts"
+  },
   "appSlug": "abyssale",
   "appName": "Abyssale",
-  "providerDocs": "https://developers.abyssale.com/api.yaml",
-  "providerWebsite": "https://www.abyssale.com/",
-  "authentication": {
-    "type": "api_key_header",
-    "requiredCredentialFields": [
-      "api_key"
-    ],
-    "settings": {
-      "parameter_name": "x-api-key"
-    },
-    "requiredHeaderNames": [],
-    "helpUrl": "https://developers.abyssale.com/rest-api/authentication",
-    "tenantRequired": false,
-    "accountParameterNames": []
-  },
-  "attributionSlug": "github-abyssale-mcp",
-  "artifactType": "connector",
-  "qualityVersion": 2,
   "connectorId": "abyssale",
-  "connector": {
-    "id": "abyssale",
-    "name": "Abyssale",
-    "version": "0.1.0",
-    "baseUrl": "https://api.abyssale.com",
-    "auth": {
-      "type": "header",
-      "env": "ABYSSALE_API_KEY",
-      "header": "x-api-key"
-    },
-    "tools": [
-      {
-        "name": "abyssale_list_designs",
-        "description": "abyssale list designs",
-        "method": "GET",
-        "path": "/designs",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "per_page": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100
-            }
-          },
-          "required": [],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [],
-          "query": {
-            "per_page": "per_page"
-          },
-          "body": {}
-        },
-        "approvalRequired": false,
-        "provenance": [
-          "https://developers.abyssale.com/api-reference/listDesigns",
-          "https://developers.abyssale.com/api-reference/getGenerationRequest",
-          "https://developers.abyssale.com/api-reference/generateMultiFormatMedia"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {}
-      },
-      {
-        "name": "abyssale_get_generation",
-        "description": "abyssale get generation",
-        "method": "GET",
-        "path": "/generation-request/{generationRequestId}",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "generationRequestId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "generationRequestId"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "generationRequestId"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "approvalRequired": false,
-        "provenance": [
-          "https://developers.abyssale.com/api-reference/listDesigns",
-          "https://developers.abyssale.com/api-reference/getGenerationRequest",
-          "https://developers.abyssale.com/api-reference/generateMultiFormatMedia"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {
-          "generationRequestId": "00000000-0000-4000-8000-000000000001"
-        }
-      },
-      {
-        "name": "abyssale_generate_formats",
-        "description": "Queue asset generation using an existing design; poll get_generation. Acceptance does not mean files are finished.",
-        "method": "POST",
-        "path": "/async/banner-builder/{designId}/generate",
-        "readOnly": false,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "designId": {
-              "type": "string"
-            },
-            "template_format_names": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "elements": {
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "designId"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "designId"
-          ],
-          "query": {},
-          "body": {
-            "template_format_names": "template_format_names",
-            "elements": "elements"
-          }
-        },
-        "approvalRequired": true,
-        "provenance": [
-          "https://developers.abyssale.com/api-reference/listDesigns",
-          "https://developers.abyssale.com/api-reference/getGenerationRequest",
-          "https://developers.abyssale.com/api-reference/generateMultiFormatMedia"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {
-          "designId": "00000000-0000-4000-8000-000000000001"
-        }
-      }
-    ],
-    "workflow": {
-      "name": "abyssale-workflow",
-      "description": "Discover design templates, request asset generation and poll until the generated files are ready.",
-      "steps": [
-        "abyssale_list_designs",
-        "abyssale_get_generation",
-        "abyssale_generate_formats"
-      ]
-    },
-    "provenance": [
-      "https://developers.abyssale.com/api-reference/listDesigns",
-      "https://developers.abyssale.com/api-reference/getGenerationRequest",
-      "https://developers.abyssale.com/api-reference/generateMultiFormatMedia"
-    ],
-    "sourceEvidence": {
-      "state": "documented",
-      "providerLiveValidation": "not-run",
-      "checkedAt": "2026-11-08",
-      "operationCount": 3,
-      "kind": "official-documentation"
-    },
-    "setup": {
-      "requiresPipMcpAccount": false,
-      "credentialsHelpUrl": "https://developers.abyssale.com/rest-api/authentication",
-      "instructions": "You need at least the Admin role. In app.abyssale.com click Workspace settings, then API Key, and click Create new API key. After about 30 seconds copy the key with the copy icon."
-    },
-    "sampleWarning": "Example IDs are placeholders, not known provider records. Replace them with authorized sandbox/account IDs. Contact emails, file URLs and recipient numbers must be replaced with data you are authorized to use. Examples never authorize a write.",
-    "repoId": "abyssale-mcp",
-    "appSlug": "abyssale",
-    "product": "pipmcp",
-    "artifactType": "connector",
-    "sourceRevision": "89b2f14ecb9a5310efa88b18c4f08a366f97cc7888c9f27031263ce9972aba85",
-    "capabilityEvidence": {
-      "local": {
-        "level": "Tested",
-        "operations": [
-          {
-            "name": "abyssale_list_designs",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "abyssale_get_generation",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "abyssale_generate_formats",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          }
-        ],
-        "evidenceRefs": [
-          "Provider request/stdio contract tests"
-        ],
-        "mode": "local"
-      },
-      "managed": {
-        "level": "Documented",
-        "operations": [
-          {
-            "name": "abyssale_list_designs",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "abyssale_get_generation",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "abyssale_generate_formats",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          }
-        ],
-        "evidenceRefs": [],
-        "mode": "managed"
-      }
-    },
-    "authentication": {
-      "type": "api_key_header",
-      "requiredCredentialFields": [
-        "api_key"
-      ],
-      "settings": {
-        "parameter_name": "x-api-key"
-      },
-      "requiredHeaderNames": [],
-      "helpUrl": "https://developers.abyssale.com/rest-api/authentication",
-      "tenantRequired": false,
-      "accountParameterNames": []
-    },
-    "managedAvailability": {
-      "status": "listed",
-      "checkedAt": "2026-11-08T12:29:10.433747+00:00"
-    }
-  },
+  "executionAuthority": "pipmcp-gateway",
+  "version": "1.0.0",
+  "agentReady": true,
   "capabilityEvidence": {
     "local": {
       "level": "Tested",
       "operations": [
         {
-          "name": "abyssale_list_designs",
+          "name": "gateway_transport",
           "level": "Tested",
+          "method": "contract-fixture",
           "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "abyssale_get_generation",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "abyssale_generate_formats",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
+            "Generated gateway/stdio fixtures"
+          ]
         }
       ],
       "evidenceRefs": [
-        "Provider request/stdio contract tests"
+        "Generated gateway/stdio fixtures"
       ],
       "mode": "local"
     },
     "managed": {
       "level": "Documented",
-      "operations": [
-        {
-          "name": "abyssale_list_designs",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "abyssale_get_generation",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "abyssale_generate_formats",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        }
-      ],
+      "operations": [],
       "evidenceRefs": [],
       "mode": "managed"
     }
   },
-  "utility": {
-    "problem": "Discover design templates, request asset generation and poll until the generated files are ready.",
-    "output": "Actual provider API results through local MCP tools"
-  },
   "factory": "leadadapter-pipmcp",
-  "generatorVersion": 2
+  "generatorVersion": 3
 }

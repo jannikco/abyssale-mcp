@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-abyssale",
+      "description": "Connect AI agents to Abyssale using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-abyssale/SKILL.md": "45d119c5131b2860c2aa9ba439d33a7e6ae291cdf055b7f6502a1c2682df3661"
+  }
+}
